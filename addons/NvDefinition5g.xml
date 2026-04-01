@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Header: //source/qcom/qct/modem/rfnv/main/latest/etc/NvDefinition.xml#467 $ -->
+<!-- WARNING: This file only contains Cellular RF related NV item definitions -->
+<!-- WARNING: New NR5G specific datatypes should be assigned an id greater than 4000 -->
+<NvDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="RFA_NvDefinition_Schema.xsd">
+   <DataType name="uint8">
+      <Member type="uint8" sizeOf="1"/>
+   </DataType>
+   <DataType name="uint16">
+      <Member type="uint16" sizeOf="1"/>
+   </DataType>
+   <DataType name="uint32">
+      <Member type="uint32" sizeOf="1"/>
+   </DataType>
+   <DataType name="uint64">
+      <Member type="uint64" sizeOf="1"/>
+   </DataType>
+   <DataType name="int8">
+      <Member type="int8" sizeOf="1"/>
+   </DataType>
+   <DataType name="int16">
+      <Member type="int16" sizeOf="1"/>
+   </DataType>
+   <DataType name="int32">
+      <Member type="int32" sizeOf="1"/>
+   </DataType>
+   <DataType name="int64">
+      <Member type="int64" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_NV_TREE_NODE_TYPE" typeid="305">
+      <Member type="uint16" name="id" sizeOf="1"/>
+      <Member type="uint16" name="parentId" sizeOf="1"/>
+      <Member type="uint16" name="typeId" sizeOf="1"/>
+      <Member type="uint32" name="value" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_NV_TREE_NODE_DATA_REF_TYPE" typeid="320">
+      <Member type="uint16" name="typeId" sizeOf="1"/>
+      <Member type="uint16" name="instanceId" sizeOf="1"/>
+   </DataType>
+
+   <!-- These variant IDs cannot be used and are reserved for internal use cases or  deprecated variants. -->
+   <DataType name="RSVD_INT4000" typeid="4000"/>
+   <DataType name="RSVD_INT4001" typeid="4001"/>
+   <DataType name="RSVD_INT4012" typeid="4012"/>
+   <DataType name="RSVD_INT4014" typeid="4014"/>
+   <DataType name="RSVD_INT4015" typeid="4015"/>
+   <DataType name="RSVD_INT4036" typeid="4036"/>
+
+   <DataType name="RFNV_DATA_TYPE_AMP_MISMATCH_TBL" typeid="4002">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint16" name="num_antennas" sizeOf="1"/>
+      <Member type="int16" name="amplitude" sizeOf="8"/>
+   </DataType>
+
+   <!-- FDRSB TX NV -->
+   <!-- Per RF TRx Device ( upto 2 devices share the same data) -->
+   <DataType name="RFNV_DATA_TYPE_TX_FDRSB_COEFF" typeid="4018">
+      <Member type="uint16" name="dsr_port" sizeOf="1"/>
+      <Member type="uint16" name="fdRsbDataSize" sizeOf="1"/>
+      <Member type="uint32" name="bandwidth" sizeOf="1"/>
+      <Member type="uint32"  name="fdrsb_data" sizeOf="96"/>
+   </DataType>
+   <!-- Store per RF TRx Device ( upto 2 devices share same data) -->
+   <DataType name="RFNV_DATA_TYPE_RX_FDRSB_COEFF" typeid="4019">
+      <Member type="uint16" name="dsr_port" sizeOf="1"/>
+      <Member type="uint16" name="fdRsbDataSize" sizeOf="1"/>
+      <Member type="uint32" name="bandwidth" sizeOf="1"/>
+      <Member type="uint32"  name="fdrsb_data" sizeOf="96"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_FDRSB_COEFF_V2" typeid="4031">
+      <Member type="uint16" name="dsrPort" sizeOf="1"/>
+      <Member type="uint16" name="fdRsbDataSize" sizeOf="1"/>
+      <Member type="uint32" name="bandwidth" sizeOf="1"/>
+      <Member type="uint32"  name="fdrsbData" sizeOf="96"/>
+      <Member type="uint16" name="thermBin" sizeOf="1"/>
+      <Member type="uint32" name="frequency" sizeOf="1"/>
+   </DataType>
+   <!-- Store per RF TRx Device ( upto 2 devices share same data) -->
+   <DataType name="RFNV_DATA_TYPE_RX_FDRSB_COEFF_V2" typeid="4032">
+      <Member type="uint16" name="dsrPort" sizeOf="1"/>
+      <Member type="uint16" name="fdRsbDataSize" sizeOf="1"/>
+      <Member type="uint32" name="bandwidth" sizeOf="1"/>
+      <Member type="uint32"  name="fdrsbData" sizeOf="96"/>
+      <Member type="uint16" name="thermBin" sizeOf="1"/>
+      <Member type="uint32" name="frequency" sizeOf="1"/>
+   </DataType>
+   <!-- LINEARIZER NV -->
+   <DataType name="RFNV_DATA_TYPE_LIN_ENTRY">
+      <Member type="uint16" name="rgi" sizeOf="1"/>
+      <Member type="uint16" name="bias" sizeOf="1"/>
+      <Member type="int16" name="power" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_LIN_TABLE" typeid="4003">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint16" name="num_elements" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_LIN_ENTRY" name="lin_table" sizeOf="64"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_LIN_TABLE_V2" typeid="4030">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint16" name="num_elements" sizeOf="1"/>
+      <Member type="uint16" name="mod_type" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_LIN_ENTRY" name="lin_table" sizeOf="64"/>
+   </DataType>
+   <!-- MPE XPOL Cal NV -->
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_FREQ_PT">
+      <Member type="uint8" name="mVGA" sizeOf="1"/>
+      <Member type="uint16" name="freq_MHz" sizeOf="1"/>
+      <Member type="int16" name="C_real" sizeOf="1"/>
+      <Member type="int16" name="C_imag" sizeOf="1"/>
+	  <Member type="int16" name="Gain" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_XPOL_TBL_FREQ_BASED" typeid="4033">
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_MPE_XPOL_FREQ_PT" name="xpol_data" sizeOf="8"/>
+   </DataType>
+   <DataType name = "RFNV_DATA_TYPE_XPOL_MARGIN" typeid="4034">
+      <Member type ="uint8" name="margin" sizeOf="1" />
+   </DataType>
+   <!-- TX Droop Stored per tech, band, subband, rf trx dev. -->   
+   <DataType name="TX_RF_DROOP_PER_FREQUENCY">
+      <Member type="uint32" name="freq_khz" sizeOf="1"/>
+      <Member type="uint8" name="num_bb_offset" sizeOf="1"/>
+      <Member type="int32" name="bb_droop_offset_list_hz" sizeOf="32"/>
+      <!-- Upto 32 BB droop offsets based on Num_BB_Offset -->
+      <Member type="int16" name="gain_bb_offset_dB10" sizeOf="32"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_RF_DROOP_TABLE_PER_ANTENNA_GROUP" typeid="4004">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="TX_RF_DROOP_PER_FREQUENCY" name="tx_rf_droop_per_frequency" sizeOf="16"/>
+      <!-- Upto 16 frequencies based on Num_Frequencies -->
+   </DataType>
+   <!-- TX Antenna char -->
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_MEAS">
+      <Member type="int16" name="num_elements" sizeOf="1"/>
+      <Member type="int16" name="meas_dB10" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MEAS_VS_FREQ">
+      <Member type="RFNV_DATA_TYPE_MMW_TX_MEAS" name="meas_vs_freq" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_GAIN" typeid="4005">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="uint32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_EFF" typeid="4006">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="uint32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_POUT_VS_FREQ_VS_TEMP" typeid="4007">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="uint32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <!-- TX Antenna char per Beam . To be stored at Band/ subband level. -->
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_MEAS_V1">
+      <Member type="uint16" name="num_valid_entries" sizeOf="1"/>
+      <Member type="int16" name="meas_dB10" sizeOf="128"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1">
+      <Member type="RFNV_DATA_TYPE_MMW_TX_MEAS_V1" name="meas_vs_freq" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_GAIN_V1" typeid="4020">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="int32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_GAIN_V2" typeid="4037">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="int32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="uint16" name="beam_start_index" sizeOf="1"/>
+      <Member type="uint16" name="beam_stop_index" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_EFF_V1" typeid="4021">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="int32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_ANT_EFF_V2" typeid="4039">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="int32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="uint16" name="beam_start_index" sizeOf="1"/>
+      <Member type="uint16" name="beam_stop_index" sizeOf="1"/>      
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_POUT_VS_FREQ_VS_TEMP_V1" typeid="4022">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_temp" sizeOf="1"/>
+      <Member type="int32" name="temp_list" sizeOf="16"/>
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="uint32" name="freq_kHz" sizeOf="16"/>
+      <Member type="RFNV_DATA_TYPE_MEAS_VS_FREQ_V1" name="meas_vs_temp" sizeOf="16"/>
+   </DataType>
+   <!-- RX CAL -->
+   <DataType name="RX_RF_GAIN_PER_STATE">
+      <Member type="uint8" name="Rx_Gain_State" sizeOf="1"/>
+      <Member type="int16" name="gain_dB10" sizeOf="16"/>
+      <!-- Upto 16 frequencies based on Num_Frequencies -->
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_RX_RF_GAIN_TABLE_PER_ANTENNA_GROUP" typeid="4009">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint8" name="Num_Frequencies" sizeOf="1"/>
+      <Member type="uint32" name="Carrier_Frequency_List_kHz" sizeOf="16"/>
+      <!-- Upto 16 frequencies based on Num_Frequencies -->
+      <Member type="uint8" name="Num_Gain_States" sizeOf="1"/>
+      <!-- G0 with absolute measurements; the rest computed based on relative measurements -->
+      <Member type="RX_RF_GAIN_PER_STATE" name="Rx_RF_Gain_vs_Freq_Per_State" sizeOf="16"/>
+      <!-- Upto 16 gain states based on Num_Gain_States -->
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_RX_RF_GAIN_MISMATCH_TABLE_PER_ANTENNA_GROUP" typeid="4042">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint16" name="num_antennas" sizeOf="1"/>
+      <Member type="int16" name="gain_mismatch_db10" sizeOf="8"/>
+   </DataType>
+   <DataType name="RX_BASEBAND_DROOP_PER_BANDWIDTH">
+      <Member type="uint32" name="Rx_BandWidth_kHz" sizeOf="1"/>
+      <Member type="uint8" name="Num_Frequencies" sizeOf="1"/>
+      <Member type="uint32" name="Frequency_kHz" sizeOf="8"/>
+      <!-- Upto 8 frequencies based on Num_Frequencies -->
+      <Member type="int16" name="gain_dB10" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_RX_BASEBAND_DROOP_TABLE_PER_ANTENNA_GROUP" typeid="4010">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint8" name="Num_BandWidths" sizeOf="1"/>
+      <Member type="RX_BASEBAND_DROOP_PER_BANDWIDTH" name="Rx_Baseband_Droop_Per_Bandwidth" sizeOf="16"/>
+      <!-- Upto 16 bandwidths based on Num_BandWidths -->
+   </DataType>
+   <!-- RX RF DROOP CAL -->
+   <DataType name="RX_RF_DROOP_PER_FREQUENCY">
+      <Member type="uint32" name="center_frequency_khz" sizeOf="1"/>
+      <Member type="uint8" name="Num_BB_Offset" sizeOf="1"/>
+      <Member type="int32" name="BB_Droop_Offset_List_Hz" sizeOf="32"/>
+      <!-- Upto 32 BB droop offsets based on Num_BB_Offset -->
+      <Member type="int16" name="gain_bb_offset_dB10" sizeOf="32"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_RX_RF_DROOP_TABLE_PER_ANTENNA_GROUP" typeid="4024">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint8" name="Num_Frequencies" sizeOf="1"/>
+      <Member type="RX_RF_DROOP_PER_FREQUENCY" name="Rx_RF_Droop_Per_Frequency" sizeOf="16"/>
+      <!-- Upto 16 frequencies based on Num_Frequencies -->
+   </DataType>
+   <!-- RX CAL Enhanced Gain States-->
+   <DataType name="RX_RF_GAIN_PER_GAIN_STATE_V2">
+      <Member type="uint8" name="rx_gain_state" sizeOf="1"/>
+      <Member type="int16" name="gain_db10" sizeOf="1"/>
+   </DataType>
+   <DataType name="RX_RF_GAIN_PER_CENTER_FREQUENCY_V2">
+      <Member type="uint32" name="center_frequency_khz" sizeOf="1"/>
+      <Member type="uint8" name="num_gain_states" sizeOf="1"/>
+      <Member type="RX_RF_GAIN_PER_GAIN_STATE_V2" name="rx_rf_gain_per_state_vs_center_frequency" sizeOf="32"/>
+      <!-- Upto 32 gain states based on Num_Gain_States -->
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_RX_RF_GAIN_TABLE_PER_ANTENNA_GROUP_V2" typeid="4049">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <!-- MIMO Chain ID -->
+      <Member type="uint8" name="num_frequencies" sizeOf="1"/>
+      <Member type="RX_RF_GAIN_PER_CENTER_FREQUENCY_V2" name="rx_rf_gain_per_frequency" sizeOf="16"/>
+      <!-- Upto 16 frequencies based on Num_Frequencies -->
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_PHARR_CAL" typeid="4051">
+      <Member type="uint8" name="element_id" sizeOf="8"/>
+      <Member type="uint8" name="rgi" sizeOf="8"/>
+      <Member type="int16" name="gain" sizeOf="8"/>
+      <Member type="uint16" name="phase" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_RX_PHARR_CAL" typeid="4052">
+      <Member type="uint8" name="element_id" sizeOf="8"/>
+      <Member type="uint8" name="rgi" sizeOf="8"/>
+      <Member type="int16" name="gain" sizeOf="8"/>
+      <Member type="uint16" name="phase" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_CHAR_ENTRY">
+      <Member type="uint16" name="freq_MHz" sizeOf="1"/>
+      <Member type="int16" name="C_real" sizeOf="1"/>
+        <Member type="int16" name="C_imag" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_W_COVER" typeid="4055">
+      <Member type="uint8" name="num_freq" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_MPE_XPOL_CHAR_ENTRY" name="xpol_char_data" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_N_COVER" typeid="4056">
+      <Member type="uint8" name="num_freq" sizeOf="1"/>   
+      <Member type="RFNV_DATA_TYPE_MPE_XPOL_CHAR_ENTRY" name="xpol_char_data" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_W_COVER_ROS" typeid="4057">
+      <Member type="uint32" name="pRos" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MPE_XPOL_N_COVER_ROS" typeid="4058">
+      <Member type="uint32" name="Ros" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_DAC_PER_DAC_DATA">
+      <Member type="uint32" name="cal_code" sizeOf="40"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_DAC_CAL_DATA" typeid="4011">
+      <Member type="RFNV_DATA_TYPE_TX_DAC_PER_DAC_DATA" name="dac_cal_data" sizeOf="2"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_RX_STATIC" typeid="4013">
+      <Member type="uint8" name="num_valid_gain_states" sizeOf="1"/>
+      <Member type="int32" name="rise_swpt_data" sizeOf="16"/>
+      <Member type="int32" name="fall_hysterisis_offset" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_RX_JDET_THRESHOLD_DATA" typeid="4023">
+      <Member type="int32" name="reserved" sizeOf="1"/>
+      <Member type="int32" name="jdet_threshold" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_XO_CAL" typeid="4025">
+      <Member type="uint16" name="raw_data" sizeOf="1"/>
+   </DataType>
+   <DataType name="ENDC_AMPR_VS_RB_TYPE">
+      <Member type="uint8" name="rb" sizeOf="4"/>
+   </DataType>
+   <DataType name="RFNV_DATA_ENDC_AMPR_LUT_TYPE">
+      <Member type="uint32" name="im3_freq_khz_tbl" sizeOf="16"/>
+      <Member type="uint8" name="rb_alloc_tbl" sizeOf="4"/>
+      <Member type="ENDC_AMPR_VS_RB_TYPE" name="freq" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_ENDC_AMPR" typeid="480">
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_TYPE" name="sem_13_lut" sizeOf="1"/>
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_TYPE" name="spurious_25_lut" sizeOf="1"/>
+   </DataType>
+   <DataType name="ENDC_AMPR_VS_RB_V2_TYPE">
+      <Member type="uint8" name="rb" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_ENDC_AMPR_LUT_V2_TYPE">
+      <Member type="uint32" name="im3_freq_khz_tbl" sizeOf="16"/>
+      <Member type="uint8" name="rb_alloc_tbl" sizeOf="8"/>
+      <Member type="ENDC_AMPR_VS_RB_V2_TYPE" name="freq" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_ENDC_AMPR_V2" typeid="4038">
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_V2_TYPE" name="dfts_sem_13_lut" sizeOf="1"/>
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_V2_TYPE" name="dfts_spurious_25_lut" sizeOf="1"/>
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_V2_TYPE" name="cp_sem_13_lut" sizeOf="1"/>
+      <Member type="RFNV_DATA_ENDC_AMPR_LUT_V2_TYPE" name="cp_spurious_25_lut" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_PAPT" typeid="4026">
+      <Member type="uint8" name="nv_container_index" sizeOf="1"/>
+      <Member type="uint8" name="carrier_config" sizeOf="1"/>
+      <Member type="uint8" name="papt_bypass" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_TX_EIRP_TRP_MAX" typeid="4035">
+      <Member type="int16" name="eirp_max" sizeOf="1"/>
+      <!-- EIRP Max NV value in dB10 -->
+      <Member type="int16" name="trp_max" sizeOf="1"/>
+      <!-- TRP Max NV value in dB10 -->
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_MUTUAL_COUPLING_FACTOR_PER_BEAMER">
+      <Member type="uint8" name="rf_trx_id" sizeOf="1"/>
+      <Member type="uint8" name="num_valid_elements" sizeOf="1"/>
+      <Member type="uint8" name="antenna_element_id" sizeOf="16"/>
+      <Member type="uint8" name="gain_state" sizeOf="16"/>
+      <Member type="int32" name="coupling_factor_dB10" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_MUTUAL_COUPLING_FACTOR_PER_TX_ELEMENT">
+      <Member type="uint8" name="antenna_element_id" sizeOf="1"/>
+      <Member type="uint8" name="num_valid_beamers" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_MMW_MUTUAL_COUPLING_FACTOR_PER_BEAMER" name="mutual_coupling_per_beamer" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_MUTUAL_COUPLING_FACTOR" typeid="4040">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="num_valid_elements" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_MMW_MUTUAL_COUPLING_FACTOR_PER_TX_ELEMENT" name="mutual_coupling_tx_element" sizeOf="16"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_LOOPBACK_ANTENNA_ELEMENT_INFO">
+      <Member type="uint8" name="num_elements" sizeOf="1"/>
+      <Member type="uint8" name="antenna_element_id" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_MMW_CAL_ANTENNA_ELEMENT_INFO" typeid="4050">
+      <Member type="uint8" name="antenna_group_id" sizeOf="1"/>
+      <Member type="uint8" name="antenna_element_id" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_LOOPBACK_ANTENNA_ELEMENT_INFO" name="loopback_element_info" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_PA_SWITCHPOINTS_PER_BW">
+      <Member type="uint16" name="start_bw_Mhz" sizeOf="1"/>
+      <Member type="uint16" name="end_bw_Mhz" sizeOf="1"/>
+      <Member type="uint8" name="number_of_active_pa_states" sizeOf="1"/>
+      <Member type="int16" name="pa_fall_sw" sizeOf="8"/>
+      <Member type="int16" name="pa_rise_sw" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_PA_SWITCHPOINTS_SET">
+      <Member type="uint8" name="num_of_pa_swp_sets" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_TX_PA_SWITCHPOINTS_PER_BW" name="pa_swp_set" sizeOf="10"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_ENDC_PA_SWITCHPOINTS_SET">
+      <Member type="uint8" name="band_specific" sizeOf="1"/>
+      <Member type="uint8" name="lte_band_num" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_TX_PA_SWITCHPOINTS_SET" name="pa_swp_per_bw" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_TX_ENDC_PA_SWITCHPOINTS_INFO">
+      <Member type="uint8" name="num_pa_swp_sets" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_TX_ENDC_PA_SWITCHPOINTS_SET" name="endc_pa_swp_set" sizeOf="10"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_SUB6_PA_SWITCHPOINTS_PER_BW" typeid="4041">
+      <Member type="RFNV_DATA_TYPE_TX_ENDC_PA_SWITCHPOINTS_INFO" name="endc_pa_swp_info" sizeOf="1"/>
+      <Member type="RFNV_DATA_TYPE_TX_PA_SWITCHPOINTS_SET" name="pa_swp_info" sizeOf="1"/>
+   </DataType>
+
+   <DataType name="RSVD_INT4043" typeid="4043"/>
+   <DataType name="RSVD_INT4044" typeid="4044"/>   
+
+   <DataType name="RFNV_DATA_SUB6_MPR_MOD_TYPE">
+      <Member type="uint8" name="rb_alloc" sizeOf="3"/>
+   </DataType>
+   <DataType name="RFNV_nr5g_SUB6_MPR_WAVEFORM_TYPE">
+      <Member type="RFNV_DATA_SUB6_MPR_MOD_TYPE" name="mod" sizeOf="6"/>
+   </DataType>
+   <DataType name="RFNV_nr5g_SUB6_MPR_TBL">
+      <Member type="RFNV_nr5g_SUB6_MPR_WAVEFORM_TYPE" name="waveform" sizeOf="2"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_SUB6_MPR_TBL" typeid="4045">
+      <Member type="uint8" name="power_class_mask" sizeOf="1"/>
+      <Member type="RFNV_nr5g_SUB6_MPR_TBL" name="rfnv_nr5g_sub6_mpr_tbl" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_SUB6_AMPR_COLUM">
+      <Member type="uint8" name="rb_alloc" sizeOf="3"/>
+   </DataType>
+   <DataType name="RFNV_DATA_SUB6_AMPR_MOD_TYPE">
+      <Member type="RFNV_DATA_SUB6_AMPR_COLUM" name="colum" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_nr5g_SUB6_AMPR_WAVEFORM_TYPE">
+      <Member type="RFNV_DATA_SUB6_AMPR_MOD_TYPE" name="mod" sizeOf="6"/>
+   </DataType>
+   <DataType name="RFNV_nr5g_SUB6_AMPR_TBL">
+      <Member type="RFNV_nr5g_SUB6_AMPR_WAVEFORM_TYPE" name="waveform" sizeOf="2"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_SUB6_AMPR_TBL" typeid="4046">
+      <Member type="uint8" name="ns_value" sizeOf="1"/>
+      <Member type="uint8" name="num_of_column" sizeOf="1"/>
+      <Member type="uint8" name="num_of_rb_alloc_per_colum" sizeOf="1"/>
+      <Member type="RFNV_nr5g_SUB6_AMPR_TBL" name="rfnv_nr5g_sub6_ampr_tbl" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_SUB6_MPR_SUPPLEMENTARY_MOD_TYPE">
+      <Member type="uint8" name="rb_alloc" sizeOf="3"/>
+   </DataType>
+   <DataType name="RFNV_SUB6_MPR_SUPPLEMENTARY_WAVEFORM_TYPE">
+      <Member type="RFNV_DATA_SUB6_MPR_SUPPLEMENTARY_MOD_TYPE" name="mod" sizeOf="6"/>
+   </DataType>
+   <DataType name="RFNV_SUB6_MPR_SUPPLEMENTARY_TBL">
+      <Member type="RFNV_SUB6_MPR_SUPPLEMENTARY_WAVEFORM_TYPE" name="waveform" sizeOf="2"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_SUB6_MPR_SUPPLEMENTARY_TBL" typeid="4047">
+      <Member type="uint8" name="power_class_mask" sizeOf="1"/>
+      <Member type="int32" name="tx_freq_khz_min" sizeOf="1"/>
+      <Member type="int32" name="tx_freq_khz_max" sizeOf="1"/>
+      <Member type="uint32" name="bw_mask" sizeOf="1"/>
+      <Member type="uint16" name="scs_mask" sizeOf="1"/>
+      <Member type="RFNV_SUB6_MPR_SUPPLEMENTARY_TBL" name="rfnv_sub6_mpr_supplementary_tbl" sizeOf="1"/>
+   </DataType>
+   <DataType name="RFNV_DATA_SUB6_AMPR_SUPPLEMENTARY_COLUM">
+      <Member type="uint8" name="rb_alloc" sizeOf="3"/>
+   </DataType>
+   <DataType name="RFNV_DATA_SUB6_AMPR_SUPPLEMENTARY_MOD_TYPE">
+      <Member type="RFNV_DATA_SUB6_AMPR_SUPPLEMENTARY_COLUM" name="colum" sizeOf="8"/>
+   </DataType>
+   <DataType name="RFNV_SUB6_AMPR_SUPPLEMENTARY_WAVEFORM_TYPE">
+      <Member type="RFNV_DATA_SUB6_AMPR_SUPPLEMENTARY_MOD_TYPE" name="mod" sizeOf="6"/>
+   </DataType>
+   <DataType name="RFNV_SUB6_AMPR_SUPPLEMENTARY_TBL">
+      <Member type="RFNV_SUB6_AMPR_SUPPLEMENTARY_WAVEFORM_TYPE" name="waveform" sizeOf="2"/>
+   </DataType>
+   <DataType name="RFNV_DATA_TYPE_SUB6_AMPR_SUPPLEMENTARY_TBL" typeid="4048">
+      <Member type="uint8" name="ns_value" sizeOf="1"/>
+      <Member type="uint8" name="power_class_mask" sizeOf="1"/>
+      <Member type="int32" name="tx_freq_khz_min" sizeOf="1"/>
+      <Member type="int32" name="tx_freq_khz_max" sizeOf="1"/>
+      <Member type="uint32" name="bw_mask" sizeOf="1"/>
+      <Member type="uint16" name="scs_mask" sizeOf="1"/>
+      <Member type="uint8" name="num_of_column" sizeOf="1"/>
+      <Member type="uint8" name="num_of_rb_alloc_per_colum" sizeOf="1"/>
+      <Member type="RFNV_SUB6_AMPR_SUPPLEMENTARY_TBL" name="rfnv_sub6_ampr_supplementary_tbl" sizeOf="1"/>
+   </DataType>
+
+   <!-- Note: Data type IDs from 5000 to 5999 are reserved for Qualcomm purposes and may not be reused by customer -->
+   <NvTreeFile id="30000" name="RFNV_MMW_TX_CAL" />
+   <NvTreeFile id="30001" name="RFNV_MMW_TX_STATIC" />
+   <NvTreeFile id="30002" name="RFNV_MMW_RX_CAL" />
+   <NvTreeFile id="30003" name="RFNV_MMW_RX_STATIC" />
+   <NvTreeFile id="30004" name="RFNV_MMW_CMN_STATIC" />
+   <NvTreeFile id="30005" name="RFNV_MMW_CMN_CAL" />
+   <NvTreeFile id="30006" name="RFNV_SUB6_TX_CAL" />
+   <NvTreeFile id="30007" name="RFNV_SUB6_TX_STATIC" />
+   <NvTreeFile id="30008" name="RFNV_SUB6_RX_CAL" />
+   <NvTreeFile id="30009" name="RFNV_SUB6_RX_STATIC" />
+   <NvTreeFile id="30010" name="RFNV_SUB6_FBRX_CAL" />
+   <NvTreeFile id="30011" name="RFNV_SUB6_FBRX_STATIC" />
+   <NvTreeFile id="30012" name="RFNV_SUB6_CMN_STATIC" />
+   <NvTreeFile id="30013" name="RESVD_30013" />
+   <NvTreeFile id="30014" name="RFNV_MMW_IDC_FACTORY_CAL" />
+   <NvTreeFile id="30015" name="RFNV_MMW_IDC_ONLINE_CAL" />
+   <NvTreeFile id="30016" name="RFNV_SUB6_IDC_CAL" />
+   <NvTreeFile id="30017" name="RFNV_SUB6_RESVD_30017" />
+   <NvTreeFile id="30018" name="RFNV_SUB6_CMN_CAL" />
+   <!-- IDs 30019 - 30029 were allocated in some versions of this file thus must not be used -->
+   <NvTreeFile id="30030" name="RFNV_MMW_RESVD_30030" />
+   <NvTreeFile id="30031" name="RFNV_MMW_RESVD_30031" />
+   <NvTreeFile id="30032" name="RFNV_MMW_RESVD_30032" />
+   <NvTreeFile id="30033" name="RFNV_MMW_RESVD_30033" />
+</NvDefinition>

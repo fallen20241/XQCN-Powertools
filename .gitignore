@@ -1,0 +1,25 @@
+# PyInstaller build artifacts
+dist/
+build/
+build_test/
+*.spec.bak
+
+# macOS
+*.app
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test files
+test_*.xqcn
+test_extraction.py
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+*.DS_Store
