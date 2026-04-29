@@ -1,0 +1,25 @@
+# Default: detect text vs binary, normalize line endings to LF in the repo,
+# convert to platform-native on checkout (controlled by user's core.autocrlf).
+* text=auto
+
+# Source-of-truth for the NV index. Pinned to LF so SHA-256 hashes recorded
+# in addons/nv_index.json stay stable across Windows / macOS / Linux clones.
+*.xml             text eol=lf
+addons/*.xml      text eol=lf
+
+# Generated NV index — built with newline="\n", must stay LF in the repo.
+addons/nv_index.json  text eol=lf
+
+# Python sources / shell scripts — Unix conventions.
+*.py              text eol=lf
+*.sh              text eol=lf
+
+# Windows batch launchers — must be CRLF or cmd.exe parses them oddly.
+*.bat             text eol=crlf
+
+# Binary assets — never line-end-translate.
+*.ico             binary
+*.exe             binary
+*.png             binary
+*.jpg             binary
+*.zip             binary

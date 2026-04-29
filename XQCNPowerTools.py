@@ -2,6 +2,7 @@
 XQCN PowerTools — A tkinter GUI for comparing XQCN calibration files.
 """
 
+import json
 import os
 import platform
 import re
@@ -9,7 +10,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 # ---------------------------------------------------------------------------
@@ -309,63 +310,29 @@ def _find_addons_dir() -> str:
 
 
 def load_nv_definitions(addons_dir: str) -> dict:
-    """
-    Build a lookup dict from the addon XML definition files.
+    """Load the NV-name lookup dict from addons/nv_index.json.
 
-    Keys:
-      - EFS full path  (e.g. "/nv/item_files/modem/nas/ehplmn")
-      - Numeric ID str (e.g. "10")
-    Values:
-      - (name: str, description: str)
+    The JSON is generated at build time by tools/build_nv_index.py from the
+    upstream Qualcomm XMLs. Keys are either an EFS full path
+    (e.g. "/nv/item_files/modem/nas/ehplmn") or a numeric ID string (e.g. "10").
+    Values are (name, description) tuples.
     """
+    index_path = os.path.join(addons_dir, "nv_index.json")
+    if not os.path.isfile(index_path):
+        return {}
+    try:
+        with open(index_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as exc:
+        sys.stderr.write(f"[XQCNPowerTools] Failed to load {index_path}: {exc}\n")
+        return {}
+
     defs: dict[str, tuple[str, str]] = {}
-
-    # --- nv_efs_data_format.xml -------------------------------------------
-    efs_fmt = os.path.join(addons_dir, "nv_efs_data_format.xml")
-    if os.path.isfile(efs_fmt):
-        try:
-            root = ET.parse(efs_fmt).getroot()
-            for elem in root.iter():
-                if elem.tag not in ("NvEfsItemData", "NvItemData"):
-                    continue
-                name  = elem.get("name", "")
-                desc  = elem.get("description", "")
-                nv_id = elem.get("id", "")
-                fpath = elem.get("fullpathname", "")
-                if fpath:
-                    defs[fpath] = (name, desc)
-                if nv_id and nv_id not in defs:
-                    defs[nv_id] = (name, desc)
-        except Exception:
-            pass
-
-    # --- NvDefinition.xml  (RF NV items by numeric ID) --------------------
-    nvdef = os.path.join(addons_dir, "NvDefinition.xml")
-    if os.path.isfile(nvdef):
-        try:
-            root = ET.parse(nvdef).getroot()
-            for elem in root.iter("NvItem"):
-                nv_id = elem.get("id", "")
-                name  = elem.get("name", "")
-                if nv_id and name and nv_id not in defs:
-                    defs[nv_id] = (name, "")
-        except Exception:
-            pass
-
-    # --- NvDefinition5g.xml  (5G tree files by numeric ID) ----------------
-    nvdef5g = os.path.join(addons_dir, "NvDefinition5g.xml")
-    if os.path.isfile(nvdef5g):
-        try:
-            root = ET.parse(nvdef5g).getroot()
-            for elem in root.iter():
-                if elem.tag in ("NvItem", "NvTreeFile"):
-                    nv_id = elem.get("id", "")
-                    name  = elem.get("name", "")
-                    if nv_id and name and nv_id not in defs:
-                        defs[nv_id] = (name, "")
-        except Exception:
-            pass
-
+    for k, v in data.get("by_path", {}).items():
+        defs[k] = (v[0], v[1])
+    for k, v in data.get("by_id", {}).items():
+        if k not in defs:
+            defs[k] = (v[0], v[1])
     return defs
 
 
@@ -494,7 +461,7 @@ def save_xqcn_filtered(source_path: str, dest_path: str, keys_to_keep: set):
 class XQCNPowerTools(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("XQCN PowerTools — v0.11")
+        self.title("XQCN PowerTools — v0.12")
         self.geometry("1280x820")
         self.minsize(900, 600)
         self.configure(bg=BG)

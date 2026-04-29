@@ -5,7 +5,7 @@ a = Analysis(
     ['XQCNPowerTools.py'],
     pathex=[],
     binaries=[],
-    datas=[('addons', 'addons'), ('fallout.ico', '.')],
+    datas=[('addons/nv_index.json', 'addons'), ('fallout.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
