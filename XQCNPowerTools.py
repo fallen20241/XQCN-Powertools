@@ -419,14 +419,42 @@ def _remove_unlisted_entries(node: ET.Element, keys_to_keep: set, section_stack:
         _remove_unlisted_entries(child, keys_to_keep, new_stack)
 
 
+def _attrs_double_to_single(xml_text: str) -> str:
+    """Convert ET's double-quoted attributes to single-quoted form, fixing entity escapes.
+
+    Inside "..." values, ET escapes & < > " (and leaves ' literal). Inside '...' values,
+    XML requires ' to be escaped (and " is then safe). Naively swapping quotes produces
+    invalid XML when a value contains a literal apostrophe.
+    """
+    def repl(m):
+        leader, name, value = m.group(1), m.group(2), m.group(3)
+        # &quot; is no longer needed inside single quotes; ' must now be escaped.
+        value = value.replace("&quot;", '"').replace("'", "&apos;")
+        return f"{leader}{name}='{value}'"
+    # Match: leading whitespace + attribute name + ="value"
+    return re.sub(r'(\s)([A-Za-z_][\w:.-]*)="([^"]*)"', repl, xml_text)
+
+
 def save_xqcn_filtered(source_path: str, dest_path: str, keys_to_keep: set):
-    """Write a new XQCN containing only entries whose key is in keys_to_keep."""
+    """Write a new XQCN containing only entries whose key is in keys_to_keep.
+
+    Preserves the source file's text encoding (UTF-8 or Windows-1252), its XML
+    declaration line verbatim, and its attribute quote style (' vs ").
+    """
     with open(source_path, "rb") as f:
         raw = f.read()
     try:
         text = raw.decode("utf-8")
+        src_encoding = "utf-8"
     except UnicodeDecodeError:
         text = raw.decode("windows-1252", errors="replace")
+        src_encoding = "windows-1252"
+
+    # Capture the original XML declaration so we can restore it; ET.tostring drops it.
+    # Normalize line endings to \n — text-mode write on Windows will translate to \r\n,
+    # matching the rest of the body which ET emits with \n separators.
+    decl_match = re.match(r"\s*(<\?xml[^?]*\?>\s*)", text)
+    xml_declaration = decl_match.group(1).replace("\r\n", "\n").replace("\r", "\n") if decl_match else ""
 
     # Detect the attribute quote character used in the original file so we can preserve it.
     # Both ' and " are valid XML; some XQCN files use single quotes throughout.
@@ -452,9 +480,11 @@ def save_xqcn_filtered(source_path: str, dest_path: str, keys_to_keep: set):
     # ET always serializes with double quotes; convert back to single quotes if the source used them.
     output = ET.tostring(root, encoding="unicode")
     if orig_quote == "'":
-        output = re.sub(r'="([^"]*)"', r"='\1'", output)
+        output = _attrs_double_to_single(output)
 
-    with open(dest_path, "w", encoding="utf-8") as f:
+    output = xml_declaration + output
+
+    with open(dest_path, "w", encoding=src_encoding, errors="replace") as f:
         f.write(output)
 
 
@@ -464,7 +494,7 @@ def save_xqcn_filtered(source_path: str, dest_path: str, keys_to_keep: set):
 class XQCNPowerTools(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("XQCN PowerTools — v0.10")
+        self.title("XQCN PowerTools — v0.11")
         self.geometry("1280x820")
         self.minsize(900, 600)
         self.configure(bg=BG)
