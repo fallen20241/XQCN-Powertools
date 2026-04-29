@@ -2,7 +2,7 @@
 
 A Windows desktop application for inspecting, comparing, and editing Qualcomm XQCN modem calibration files. Built for engineers working with Quectel modem modules.
 
-> **Version 0.10** — Active development. The XQCN Editor feature is experimental.
+> **Version 0.12** — Active development. The XQCN Editor feature is experimental.
 
 ---
 
@@ -27,13 +27,20 @@ Selectively remove NV entries from an XQCN file and save a trimmed copy.
 - Correctly removes paired EFS_Dir + EFS_Data entries together
 
 ### NV Name Resolution
-Friendly names and descriptions are resolved from three Qualcomm definition files bundled in `addons/`:
+Friendly names and descriptions are resolved from a consolidated index at `addons/nv_index.json` (~14,900 entries, ~707 KB). The index is generated at build time from three upstream Qualcomm XMLs, which are kept in `addons/` as source-of-truth but not bundled into the final executable:
 
-| File | Contents |
+| Source XML | Contents |
 |---|---|
 | `NvDefinition.xml` | RF NV items by numeric ID (~14k items) |
 | `NvDefinition5g.xml` | 5G NR tree file IDs |
 | `nv_efs_data_format.xml` | EFS path → name + description |
+
+Regenerate the index after updating any source XML:
+```bash
+python tools/build_nv_index.py            # rebuild
+python tools/build_nv_index.py --check    # exit 1 if stale (CI-friendly)
+```
+SHA-256 hashes of the source XMLs are recorded in the index's `_meta` block so staleness is detectable without re-parsing.
 
 ---
 
@@ -122,10 +129,14 @@ FirmwareExtractor.py    Firmware extraction tool
 FirmwareExtractor.spec  PyInstaller build spec
 FirmwareExtractor.bat   Windows launcher
 fallout.ico             Application icon
+.gitattributes          Cross-platform line-ending rules
 addons/
-  NvDefinition.xml
-  NvDefinition5g.xml
-  nv_efs_data_format.xml
+  nv_index.json         Consolidated NV lookup (bundled at runtime)
+  NvDefinition.xml      Source XML — Qualcomm RF NV items
+  NvDefinition5g.xml    Source XML — 5G NR tree files
+  nv_efs_data_format.xml  Source XML — EFS paths + descriptions
+tools/
+  build_nv_index.py     Regenerates addons/nv_index.json from source XMLs
 ```
 
 ---
